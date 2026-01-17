@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- PDF.js engine -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<script>
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karieson Research & Publications</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+body {
+  margin:0;
+  padding:20px;
+  background:linear-gradient(135deg,#ffffff,#ffb347);
+  color:#222;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-height:100vh;
+}
+
+/* HEADER */
+header { width:100%; max-width:900px; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+.brand { font-weight:600; font-size:18px; }
+.menu-icon { font-size:26px; cursor:pointer; }
+
+/* HAMBURGER MENU */
+.menu { width:100%; max-width:700px; overflow:hidden; max-height:0; transition:max-height 0.4s ease; text-align:center; margin-bottom:20px; }
+.menu.open { max-height:400px; }
+.menu h4 { cursor:pointer; margin:12px 0; color:#1a73e8; }
+.menu-content { max-height:0; overflow:hidden; transition:max-height 0.4s ease; font-size:14px; }
+.menu-content.open { max-height:200px; }
+
+/* HOME */
+#home { text-align:center; max-width:700px; }
+#welcome-title {
+  color:#c62828;
+  text-shadow:2px 2px 6px rgba(0,0,0,0.3);
+}
+.subtitle {
+  color:#c62828;
+  text-align:center;
+  font-size:14px;
+  margin:15px 0 25px;
+  text-shadow:1px 1px 4px rgba(0,0,0,0.25);
+}
+.cta-btn {
+  background:#1a73e8;
+  color:#fff;
+  border:none;
+  padding:10px 26px;
+  border-radius:6px;
+  cursor:pointer;
+}
+.cta-btn:hover { background:#0c47a1; }
+
+/* CONTACT ME CTA - SMALL SQUARE WHITE WITH RED FONT AND GLOW */
+.cta-btn#contactBtn {
+  background: #fff;
+  color: red;
+  border: 2px solid red;
+  padding: 6px 6px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0 0 8px red;
+  transition: 0.3s;
+}
+.cta-btn#contactBtn:hover {
+  box-shadow: 0 0 15px red;
+  transform: scale(1.05);
+}
+
+/* RESEARCH & PUBLICATIONS LANDING */
+.container {
+  width:100%;
+  max-width:700px;
+  max-height:0;
+  opacity:0;
+  overflow:hidden;
+  transition:max-height 0.7s ease, opacity 0.7s ease;
+  margin-top:20px;
+  background:transparent;
+  padding:20px;
+  display:none;
+}
+.container.show {
+  max-height:5000px;
+  opacity:1;
+  display:block;
+}
+
+/* Landing title & subtitle */
+.container .landing-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; }
+.container h2 { margin:0; font-size:18px; color:#1a73e8; }
+.container .landing-subtitle { font-size:14px; color:#555; margin-bottom:20px; }
+
+/* Expand/collapse all */
+.expand-collapse { font-size:12px; cursor:pointer; color:#1a73e8; text-decoration:underline; }
+
+/* Accordion buttons */
+.category-btn, .accordion { 
+  background:none;
+  border:none;
+  color:#1a73e8;
+  text-decoration:underline;
+  cursor:pointer;
+  font-size:13px;
+  width:100%;
+  text-align:left;
+  margin:6px 0;
+}
+
+/* PANEL */
+.panel { display:none; padding-left:10px; margin-bottom:15px; transition: all 0.4s ease; }
+
+/* PDF Accordion Card */
+.pdf-card { 
+    display: flex;                     /* sidebar + content side by side */
+    border: 1px solid #ccc;            /* light border around the card */
+    margin: 10px 0;                     /* spacing from other content */
+    height: 500px;                      /* fixed height for scrolling */
+    overflow-y: auto;                   /* scroll vertically if content exceeds height */
+    background-color: white;            /* card background */
+    border-radius: 5px;                 /* optional rounded corners */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* soft shadow */
+}
+/* PDF Preview */
+.pdf-container {
+  height: 400px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px;
+  margin-top: 10px;
+}
+
+#pdf-canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+/* NUMBERING FOR DEGREE AND DIPLOMA */
+.panel.degree { counter-reset: degree-counter; }
+.panel.degree .item {
+  counter-increment: degree-counter;
+  padding-left:32px;
+}
+.panel.degree .item h4::before {
+  content: counter(degree-counter) ". ";
+  position: absolute;
+  left:0;
+  font-weight:600;
+  color:#000;
+}
+
+.panel.diploma { counter-reset: diploma-counter; }
+.panel.diploma .item {
+  counter-increment: diploma-counter;
+  padding-left:32px;
+}
+.panel.diploma .item h4::before {
+  content: counter(diploma-counter) ". ";
+  position:absolute;
+  left:0;
+  font-weight:600;
+  color:#000;
+}
+
+/* WHITE GLOWING BUY NOW BUTTON */
+.buy-btn {
+  background: #ffffff;
+  color: #ff7a00;              /* orange text */
+  border: 2px solid #ff7a00;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+  float: right;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255,122,0,0.8);
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.buy-btn:hover {
+  background: #ff7a00;
+  color: #ffffff;
+  box-shadow: 0 0 18px rgba(255,122,0,1);
+  transform: scale(1.08);
+}
+
+/* FOOTER */
+footer {
+  margin-top:40px;
+  font-size:13px;
+  font-weight:bold;
+  color:red;
+  text-align:center;
+}
+
+/* EXTRA INFO BELOW FOOTER */
+.extra-footer {
+  max-width:700px;
+  margin:20px auto;
+  text-align:center;
+  font-size:14px;
+  color:#222;
+  line-height:1.6;
+}
+.extra-footer p { margin:6px 0; }
+
+/* CONTACT MODAL */
+.contact-modal {
+  display:none;
+  position:fixed;
+  z-index:999;
+  left:0; top:0;
+  width:100%; height:100%;
+  background-color: rgba(0,0,0,0.5);
+  justify-content:center; align-items:center;
+}
+.contact-content {
+  background:#fff;
+  padding:20px 25px;
+  border-radius:10px;
+  width:90%;
+  max-width:450px;
+  text-align:center;
+  position:relative;
+  box-shadow:0 6px 20px rgba(0,0,0,0.2);
+}
+.contact-content input,
+.contact-content textarea {
+  width:100%;
+  margin:10px 0;
+  padding:10px;
+  border-radius:6px;
+  border:1px solid #ccc;
+  font-family: 'Poppins', sans-serif;
+}
+.close-btn {
+  position:absolute;
+  top:10px; right:15px;
+  font-size:22px;
+  cursor:pointer;
+  color:#c62828;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Karieson</div>
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+</header>
+
+<div class="menu" id="menu">
+  <h4 onclick="toggleMenuItem(this)">About Me</h4>
+  <div class="menu-content"> I hold a Bachelor of Science in Information Science and a Diploma in Information Technology, complemented by various ICT short courses. I have also honed leadership skills through the YALI Network and gained expertise in Monitoring & Evaluation via Coursera. In addition to my technical and professional background, I am a creative writer and the author of several short novels.</div>
+
+  <h4 onclick="toggleMenuItem(this)">What I Do</h4>
+  <div class="menu-content">I deliver high-quality academic research, university projects, and original scholarly publications.</div>
+</div>
+
+<section id="home">
+  <h1 id="welcome-title">Welcome to Karieson Research & Publications</h1>
+  <p class="subtitle">A professional digital platform dedicated to academic research, university projects, and scholarly publications.</p>
+  <button class="cta-btn" id="getStarted">Get Started</button>
+
+  <div class="extra-section">
+    <p>I’d love to hear from you! Whether you have a question, collaboration idea, or publishing inquiry, just click the button below and send me a message. I’ll get back to you promptly.</p>
+    <button class="cta-btn" id="contactBtn">Contact Me</button>
+  </div>
+</section>
+
+<section class="container" id="publications">
+  <div class="landing-header">
+    <h2>Research & Publications</h2>
+    <span class="expand-collapse" onclick="expandAll()">Expand All</span> | 
+    <span class="expand-collapse" onclick="collapseAll()">Collapse All</span>
+  </div>
+  <p class="landing-subtitle">Explore a curated collection of university research projects and original novels designed to inspire, educate, and engage.</p>
+
+  <!-- University Research Projects -->
+  <button class="category-btn">University Research Projects</button>
+  <div class="panel">
+
+    <!-- Course: Human Resource -->
+    <button class="accordion">Human Resource</button>
+    <div class="panel">
+      <button class="accordion">Degree Research</button>
+      <div class="panel degree">
+        <div class="item">
+          <h4>HR Planning Strategies</h4>
+          <div class="pdf-container">
+  <canvas id="pdf-canvas"></canvas>
+</div>
+      <a href="https://selar.com/1601277458" target="_blank" class="buy-btn">Buy Now</a>
+        </div>
+      </div>
+      <button class="accordion">Diploma Research</button>
+      <div class="panel diploma">
+        <div class="item">
+          <h4>Employee Performance Management</h4>
+        <div class="pdf-container">
+  <canvas id="pdf-canvas"></canvas>
+</div>
+          <a href="https://selar.com/1601277458" target="_blank" class="buy-btn">Buy Now</a>
+        </div>
+      </div>
+    </div>
+
+    <button class="accordion">Accounting and Finance</button>
+    <div class="panel">
+      <button class="accordion">Degree Research</button>
+      <div class="panel degree">
+        <div class="item">
+          <h4>Financial Planning Strategies</h4>
+       <div class="pdf-container">
+  <canvas id="pdf-canvas"></canvas>
+</div>
+         <a href="https://selar.com/1601277458" target="_blank" class="buy-btn">Buy Now</a>
+        </div>
+        <div class="item">
+          <h4>Investment Risk Analysis</h4>
+     <div class="pdf-container">
+  <canvas id="pdf-canvas"></canvas>
+</div>
+          <a href="https://selar.com/1601277458" target="_blank" class="buy-btn">Buy Now</a>
+        </div>
+      </div>
+      <button class="accordion">Diploma Research</button>
+      <div class="panel diploma">
+        <div class="item">
+          <h4>Role of Accounting Software in Accounting Accuracy</h4>
+    <div class="pdf-container">
+  <canvas id="pdf-canvas"></canvas>
+</div>
+       <a href="https://selar.com/1601277458" target="_blank" class="buy-btn">Buy Now</a>
+        </div>
+      </div>
+    </div>
+
+    <button class="accordion">Supply Chain Management</button>
+    <div class="panel"><p>Degree and Diploma research topics coming soon.</p></div>
+    <button class="accordion">Business Management</button>
+    <div class="panel"><p>Degree and Diploma research topics coming soon.</p></div>
+  </div>
+
+  <!-- Publications -->
+  <button class="category-btn">Publications</button>
+  <div class="panel">
+    <button class="accordion">African Folklore</button>
+    <div class="panel">
+      <div class="item">
+        <h4>The Brave Hare</h4>
+        <p><strong>Synopsis:</strong> A tale of cunning and courage in an African village...</p>
+        <p><strong>Chapter Preview:</strong> The hare was quick to escape the lion's clutches...</p>
+        <a href="https://selar.com/1601277458" target="_blank" class="buy-btn">Buy Now</a>
+      </div>
+      <div class="item">
+        <h4>The Clever Tortoise</h4>
+        <p><strong>Synopsis:</strong> Stories teaching patience and wisdom...</p>
+        <p><strong>Chapter Preview:</strong> The tortoise slowly approached the river bank...</p>
+     <a href="https://selar.com/1601277458" target="_blank" class="buy-btn">Buy Now</a>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<footer>© 2026 Karieson Research & Publications. All rights reserved.</footer>
+
+<div class="extra-footer">
+  <p><strong>Mission:</strong> To produce and publish high-quality academic research, creative short fiction, and professional proposals grounded in originality, clarity, and ethical standards.</p>
+  <p><strong>Vision:</strong> To become a trusted digital platform for independent research and publications, contributing meaningfully to academic, professional, and creative communities.</p>
+  <p><strong>Email:</strong> sonfkarie@gmail.com</p>
+  <p><strong>Tel:</strong> +254 728 428 431</p>
+  <p><strong>WhatsApp:</strong> +254 705 299 600</p>
+</div>
+
+<div id="contactForm" class="contact-modal">
+  <div class="contact-content">
+    <span class="close-btn" onclick="closeForm()">&times;</span>
+    <h3>Send Me a Message</h3>
+    <input type="text" placeholder="Your Name" id="name">
+    <input type="email" placeholder="Your Email" id="email">
+    <textarea rows="4" placeholder="Your Message" id="message"></textarea>
+    <button class="cta-btn" onclick="submitForm()">Submit</button>
+  </div>
+</div>
+
+<script>
+// Hamburger menu
+function toggleMenu(){document.getElementById('menu').classList.toggle('open');}
+function toggleMenuItem(el){el.nextElementSibling.classList.toggle('open');}
+
+// Get Started toggle
+const getStarted = document.getElementById('getStarted');
+const publications = document.getElementById('publications');
+getStarted.onclick = () => {
+  publications.classList.toggle('show');
+  getStarted.textContent = publications.classList.contains('show') ? 'Hide Publications' : 'Get Started';
+};
+
+// Accordion toggle with slide-in
+document.querySelectorAll('.category-btn, .accordion').forEach(btn=>{
+  btn.onclick = function(){
+    const panel = this.nextElementSibling;
+    if(panel.style.display==='block'){
+      panel.style.display='none';
+      panel.querySelectorAll('.item').forEach(i=>{
+        i.style.opacity=0;
+        i.style.transform='translateX(-40px)';
+      });
+    } else {
+      panel.style.display='block';
+      panel.querySelectorAll('.item').forEach((i,index)=>{
+        setTimeout(()=>{
+          i.style.opacity=1;
+          i.style.transform='translateX(0)';
+        }, index*100);
+      });
+    }
+  };
+});
+
+// Expand/Collapse All
+function expandAll(){
+  document.querySelectorAll('.panel').forEach(p=>{
+    p.style.display='block';
+    p.querySelectorAll('.item').forEach((i,index)=>{
+      setTimeout(()=>{ i.style.opacity=1; i.style.transform='translateX(0)'; }, index*100);
+    });
+  });
+}
+function collapseAll(){
+  document.querySelectorAll('.panel').forEach(p=>{
+    p.style.display='none';
+    p.querySelectorAll('.item').forEach(i=>{
+      i.style.opacity=0;
+      i.style.transform='translateX(-40px)';
+    });
+  });
+}
+
+// Contact Form
+document.getElementById('contactBtn').onclick = function() { document.getElementById('contactForm').style.display = 'flex'; };
+function closeForm() { document.getElementById('contactForm').style.display = 'none'; }
+function submitForm() {
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const message = document.getElementById('message').value.trim();
+  if(!name || !email || !message){ alert('Please fill in all fields!'); return; }
+  alert('Thank you! Your message has been sent.');
+  closeForm();
+}
+</script>
+ <script>
+  const pdfFile = "research_pages.pdf"; // same folder
+
+  const canvas = document.getElementById("pdf-canvas");
+  const ctx = canvas.getContext("2d");
+
+  pdfjsLib.getDocument(pdfFile).promise
+    .then(pdf => pdf.getPage(1))
+    .then(page => {
+      const viewport = page.getViewport({ scale: 1.2 });
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+
+      page.render({
+        canvasContext: ctx,
+        viewport: viewport
+      });
+    })
+    .catch(err => {
+      console.error("PDF error:", err);
+    });
+</script>
+</body>
+</html>
