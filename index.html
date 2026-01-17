@@ -148,7 +148,23 @@ header { width:100%; max-width:900px; display:flex; justify-content:space-betwee
   height: auto;
   display: block;
 }
+/* Scrollable PDF container */
+.pdf-container {
+  max-height: 400px;       /* scrollable height */
+  overflow-y: auto;        /* vertical scroll */
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px;
+  margin: 10px 0;
+  background: #fff;
+}
 
+/* Each PDF page canvas stacked vertically */
+.pdf-page {
+  width: 100%;
+  margin-bottom: 8px;
+  display: block;
+}
 
 /* NUMBERING FOR DEGREE AND DIPLOMA */
 .panel.degree { counter-reset: degree-counter; }
@@ -304,9 +320,8 @@ footer {
       <div class="panel degree">
         <div class="item">
           <h4>HR Planning Strategies</h4>
-          <div class="pdf-container">
-  <canvas id="pdf-canvas"></canvas>
-</div>
+          <!-- Scrollable PDF preview -->
+<div class="pdf-container" data-pdf="research_pages.pdf"></div>
       <a href="https://selar.com/1601277458" target="_blank" class="buy-btn">Buy Now</a>
         </div>
       </div>
@@ -314,9 +329,8 @@ footer {
       <div class="panel diploma">
         <div class="item">
           <h4>Employee Performance Management</h4>
-        <div class="pdf-container">
-  <canvas id="pdf-canvas"></canvas>
-</div>
+       <!-- Scrollable PDF preview -->
+<div class="pdf-container" data-pdf="research_pages.pdf"></div>
           <a href="https://selar.com/1601277458" target="_blank" class="buy-btn">Buy Now</a>
         </div>
       </div>
@@ -328,16 +342,14 @@ footer {
       <div class="panel degree">
         <div class="item">
           <h4>Financial Planning Strategies</h4>
-       <div class="pdf-container">
-  <canvas id="pdf-canvas"></canvas>
-</div>
+     <!-- Scrollable PDF preview -->
+<div class="pdf-container" data-pdf="research_pages.pdf"></div>
          <a href="https://selar.com/1601277458" target="_blank" class="buy-btn">Buy Now</a>
         </div>
         <div class="item">
           <h4>Investment Risk Analysis</h4>
-     <div class="pdf-container">
-  <canvas id="pdf-canvas"></canvas>
-</div>
+     <!-- Scrollable PDF preview -->
+<div class="pdf-container" data-pdf="research_pages.pdf"></div>
           <a href="https://selar.com/1601277458" target="_blank" class="buy-btn">Buy Now</a>
         </div>
       </div>
@@ -345,9 +357,8 @@ footer {
       <div class="panel diploma">
         <div class="item">
           <h4>Role of Accounting Software in Accounting Accuracy</h4>
-    <div class="pdf-container">
-  <canvas id="pdf-canvas"></canvas>
-</div>
+    <!-- Scrollable PDF preview -->
+<div class="pdf-container" data-pdf="research_pages.pdf"></div>
        <a href="https://selar.com/1601277458" target="_blank" class="buy-btn">Buy Now</a>
         </div>
       </div>
@@ -468,27 +479,35 @@ function submitForm() {
   closeForm();
 }
 </script>
- <script>
-  const pdfFile = "research_pages.pdf"; // same folder
+ <<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
-  const canvas = document.getElementById("pdf-canvas");
-  const ctx = canvas.getContext("2d");
+document.addEventListener("DOMContentLoaded", function () {
+  const containers = document.querySelectorAll(".pdf-container");
 
-  pdfjsLib.getDocument(pdfFile).promise
-    .then(pdf => pdf.getPage(1))
-    .then(page => {
-      const viewport = page.getViewport({ scale: 1.2 });
-      canvas.width = viewport.width;
-      canvas.height = viewport.height;
+  containers.forEach(container => {
+    const pdfUrl = container.dataset.pdf;
+    pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+      for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+        pdf.getPage(pageNum).then(page => {
+          const viewport = page.getViewport({ scale: 1.1 });
 
-      page.render({
-        canvasContext: ctx,
-        viewport: viewport
-      });
-    })
-    .catch(err => {
-      console.error("PDF error:", err);
-    });
+          const canvas = document.createElement("canvas");
+          canvas.classList.add("pdf-page");
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+
+          container.appendChild(canvas);
+
+          const ctx = canvas.getContext("2d");
+          page.render({ canvasContext: ctx, viewport: viewport });
+        });
+      }
+    }).catch(err => console.error("PDF load error:", err));
+  });
+
 </script>
 </body>
 </html>
