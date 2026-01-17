@@ -125,38 +125,29 @@ header { width:100%; max-width:900px; display:flex; justify-content:space-betwee
     border-radius: 5px;                 /* optional rounded corners */
     box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* soft shadow */
 }
-/* PDF Preview */
-.pdf-container {
-  height: 400px;
-  overflow-y: auto;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 8px;
-  margin-top: 10px;
+.pdf-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    margin: 10px 0;
+    padding: 8px;
+    background: #fff;
 }
 
-#pdf-canvas {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-/* Scrollable PDF container */
 .pdf-container {
-  max-height: 400px;       /* scrollable height */
-  overflow-y: auto;        /* vertical scroll */
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 8px;
-  margin: 10px 0;
-  background: #fff;
+    max-height: 400px;        /* scrollable height */
+    overflow-y: auto;         /* vertical scroll */
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-top: 6px;          /* space between title and PDF */
+    padding: 8px;
+    background: #fff;
 }
 
-/* Each PDF page canvas stacked vertically */
 .pdf-page {
-  width: 100%;
-  margin-bottom: 8px;
-  display: block;
+    width: 100%;              /* fit container width */
+    margin-bottom: 10px;      /* space between pages */
+    display: block;
 }
 
 /* NUMBERING FOR DEGREE AND DIPLOMA */
@@ -474,12 +465,7 @@ function submitForm() {
 </script>
   <!-- PDF.js engine -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-
-<script>
-  pdfjsLib.GlobalWorkerOptions.workerSrc =
-    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-</script>
- <<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
@@ -488,11 +474,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const containers = document.querySelectorAll(".pdf-container");
 
   containers.forEach(container => {
-    const pdfUrl = container.dataset.pdf;
+    const pdfUrl = container.dataset.pdf; // same PDF for all
+    if (!pdfUrl) return;
+
     pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
       for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
         pdf.getPage(pageNum).then(page => {
-          const viewport = page.getViewport({ scale: 1.1 });
+          const viewport = page.getViewport({ scale: 1 });
 
           const canvas = document.createElement("canvas");
           canvas.classList.add("pdf-page");
@@ -507,8 +495,9 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }).catch(err => console.error("PDF load error:", err));
   });
-
+});
 </script>
 </body>
 
 </html>
+
