@@ -19,21 +19,46 @@ body {
 }
 
 /* HEADER */
-header { 
-  width: 100%; 
-  max-width: 900px; 
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-  margin-bottom: 20px; 
-  background: linear-gradient(135deg, #ffffff, #ffb347); /* White to orange gradient */
-  padding: 10px 20px;
-  border-radius: 8px; /* optional rounded corners */
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* subtle shadow */
+header {
+  width: 100%;
+  max-width: 900px;
+  padding: 10px 16px;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #ffffff, #ffb347);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
-.brand .logo {
-  height: 50px;       /* adjust as needed */
+
+/* LEFT GROUP: logo + hamburger together */
+.left-group {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* space between logo and hamburger */
+}
+
+/* LOGO */
+.logo {
+  max-height: 34px;   /* desktop size */
   width: auto;
+  display: block;
+}
+
+/* HAMBURGER */
+.menu-icon {
+  font-size: 26px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* MOBILE OPTIMIZATION */
+@media (max-width: 600px) {
+  .logo {
+    max-height: 28px; /* smaller logo on phones */
+  }
+
+  .menu-icon {
+    font-size: 24px;
+  }
 }
 
 /* HAMBURGER MENU */
@@ -525,6 +550,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </body>
 
 </html>
+
 
 
 
