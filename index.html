@@ -19,9 +19,22 @@ body {
 }
 
 /* HEADER */
-header { width:100%; max-width:900px; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
-.brand { font-weight:600; font-size:18px; }
-.menu-icon { font-size:26px; cursor:pointer; }
+header { 
+  width: 100%; 
+  max-width: 900px; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 20px; 
+  background: linear-gradient(135deg, #ffffff, #ffb347); /* White to orange gradient */
+  padding: 10px 20px;
+  border-radius: 8px; /* optional rounded corners */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* subtle shadow */
+}
+.brand .logo {
+  height: 50px;       /* adjust as needed */
+  width: auto;
+}
 
 /* HAMBURGER MENU */
 .menu { width:100%; max-width:700px; overflow:hidden; max-height:0; transition:max-height 0.4s ease; text-align:center; margin-bottom:20px; }
@@ -512,6 +525,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </body>
 
 </html>
+
 
 
 
