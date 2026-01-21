@@ -29,14 +29,22 @@ header {
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-/* LEFT GROUP: logo
-.left-group {
+/* HEADER */
+header {
+  width: 100%;
+  max-width: 900px;
   display: flex;
+  justify-content: space-between; /* logo LEFT, hamburger RIGHT */
+  align-items: center;
+  padding: 10px 16px;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #ffffff, #ffb347);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 /* LOGO */
 .logo {
-  .logo {
   max-height: 42px;   /* medium size */
   width: auto;
   display: block;
@@ -49,12 +57,11 @@ header {
   line-height: 1;
 }
 
-/* MOBILE OPTIMIZATION */
+/* MOBILE */
 @media (max-width: 600px) {
   .logo {
     max-height: 34px;
   }
-}
 
   .menu-icon {
     font-size: 24px;
@@ -550,6 +557,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </body>
 
 </html>
+
 
 
 
