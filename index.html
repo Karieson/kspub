@@ -14,11 +14,13 @@ body{
 }
 
 /* HEADER */
+/* HEADER */
 header{
   background:#111;
-  padding:10px 20px;
+  padding:10px 15px;
 }
 
+/* HEADER TOP */
 .header-top{
   display:flex;
   align-items:center;
@@ -26,41 +28,50 @@ header{
   position:relative;
 }
 
+/* HAMBURGER */
 .hamburger{
-  font-size:22px;
+  width:26px;
   cursor:pointer;
   margin-right:10px;
 }
 
-.logo{
-  font-weight:bold;
-  font-size:18px;
+.hamburger span{
+  display:block;
+  height:3px;
+  background:white;
+  margin:5px 0;
 }
 
-/* DROPDOWN */
+/* LOGO */
+.logo img{
+  height:30px;
+  width:auto;
+  display:block;
+}
+
+/* DROPDOWN MENU */
 .dropdown{
-  display:none;
   position:absolute;
-  top:40px;
+  top:42px;
   left:0;
   background:#222;
-  padding:10px;
+  width:160px;
   border-radius:6px;
-  z-index:100;
+  display:none;
+  box-shadow:0 6px 18px rgba(0,0,0,0.6);
 }
 
 .dropdown a{
   display:block;
+  padding:8px 14px;
+  font-size:13px;
   color:white;
   text-decoration:none;
-  padding:6px 10px;
-  font-size:13px;
 }
 
 .dropdown a:hover{
   background:#333;
 }
-
 /* SOCIAL */
 .social{
   text-align:center;
@@ -180,8 +191,25 @@ footer{
 
 <header>
   <div class="header-top">
-    <span class="hamburger" onclick="toggleMenu()"></span>
-    <div class="logo">Karieson Publications</div>
+    
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <div class="logo">
+      <img src="ks_publogo.png" alt="Karieson Publications">
+    </div>
+
+    <div class="dropdown" id="menu">
+      <a onclick="showSection('home')">Home</a>
+      <a onclick="showSection('about')">About Us</a>
+      <a onclick="showSection('contact')">Contact Us</a>
+    </div>
+
+  </div>
+</header>
 
     <div class="dropdown" id="menu">
       <a onclick="showSection('home')">Home</a>
@@ -277,50 +305,26 @@ footer{
 © Karieson research and publications. All rights reserved
 </footer>
 
+
 <script>
 function toggleMenu(){
-  const menu=document.getElementById("menu");
-  menu.style.display = menu.style.display==="block" ? "none" : "block";
+  const menu = document.getElementById("menu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
 function showSection(id){
-  document.querySelectorAll(".section").forEach(sec=>{
+  document.querySelectorAll(".section").forEach(sec => {
     sec.classList.remove("active");
   });
   document.getElementById(id).classList.add("active");
-  document.getElementById("menu").style.display="none";
+  document.getElementById("menu").style.display = "none";
 }
 
 function toggleDescription(el){
-  const desc=el.nextElementSibling;
-  desc.style.display = desc.style.display==="block" ? "none" : "block";
+  const desc = el.nextElementSibling;
+  desc.style.display = desc.style.display === "block" ? "none" : "block";
 }
 </script>
 
 </body>
-  
 </html>
-                                                                                                                                                                  </html>  <div class="item">
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
