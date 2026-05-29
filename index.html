@@ -3,186 +3,237 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Karieson Publications</title>
+<title>GDEH Application Form</title>
 
 <style>
-body{
+*{
   margin:0;
-  font-family:Arial,sans-serif;
-  background:black;
-  color:white;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* HEADER */
+body{
+  background:#fff;
+  color:#001f3f;
+  font-size:11px;
+  line-height:1.6;
+
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+/* CONTENT WRAPPER */
+.page-content{
+  flex:1;
+  padding:20px;
+}
+
 /* HEADER */
 header{
-  background:#111;
-  padding:10px 15px;
+  position:flex;
+  padding-bottom:20px;
 }
 
-/* HEADER TOP */
-.header-top{
+.logo img{
+  width:100px;
+}
+
+.home-link{
+  position:absolute;
+  top:10px;
+  right:20px;
+  color:#000;
+  text-decoration:none;
+  font-size:11px;
+  font-weight:600;
+}
+
+.home-link:hover{
+  text-decoration:underline;
+}
+
+/* TITLE */
+h2{
+  color:#001f3f;
+  font-size:13px;
+  font-weight:600;
+  text-align:center;
+  margin-bottom:10px;
+}
+
+.note{
+  text-align:center;
+  font-size:10px;
+  color:#444;
+  margin-bottom:15px;
+}
+
+/* FORM */
+form{
+  width:100%;
+  max-width:700px;
+  margin:0 auto;
+}
+
+fieldset{
+  border:none;
+  margin-bottom:15px;
+  padding:10px 0;
+}
+
+legend{
+  font-size:11px;
+  color:#001f3f;
+  font-weight:600;
+}
+
+label{
+  display:block;
+  margin-top:8px;
+  margin-bottom:3px;
+  font-size:10px;
+  color:#334;
+}
+
+.required{ color:red; }
+
+input, select{
+  width:100%;
+  padding:6px;
+  font-size:10px;
+  color:#000;
+  border:1px solid #ccc;
+  border-radius:4px;
+}
+
+
+/* BUTTONS */
+button {
+  display: block;
+  margin: 12px auto;
+  padding: 5px 10px;
+  font-size: 10px;
+  border: none;
+  border-radius: 20px;
+  background: #001f3f; /* dark navy */
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(0, 31, 63, 0.6);
+  transition: 0.3s;
+}
+
+/* hover glow */
+button:hover {
+  box-shadow: 0 0 10px rgba(0, 31, 63, 0.9);
+  opacity: 0.9;
+}
+
+/* disabled state */
+button:disabled {
+  background: gray;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* CONSENT */
+.consent-box{
   display:flex;
   align-items:center;
-  justify-content:flex-start;
-  position:relative;
+  gap:8px;
+  margin-top:15px;
 }
 
-/* HAMBURGER */
-.hamburger{
-  width:26px;
-  cursor:pointer;
-  margin-right:10px;
+.consent-box input{ width:auto; }
+
+/* CAPTCHA */
+#captchaBox{
+  text-align:center;
+  margin-top:20px;
 }
 
-.hamburger span{
-  display:block;
-  height:3px;
-  background:white;
-  margin:5px 0;
-}
-
-/* LOGO */
-.logo img{
-  height:30px;
-  width:auto;
-  display:block;
-}
-
-/* DROPDOWN MENU */
-.dropdown{
-  position:absolute;
-  top:42px;
-  left:0;
-  background:#222;
-  width:160px;
+#captchaImage{
+  border:1px solid #ddd;
   border-radius:6px;
-  display:none;
-  box-shadow:0 6px 18px rgba(0,0,0,0.6);
+  background:#f9f9f9;
+  box-shadow:0 0 6px rgba(0,31,63,0.1);
+}
+#paymentSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 25px;
 }
 
-.dropdown a{
-  display:block;
-  padding:8px 14px;
-  font-size:13px;
-  color:white;
-  text-decoration:none;
+#paymentSection h3 {
+  font-size: 15px;
+  margin-bottom: 8px;
 }
 
-.dropdown a:hover{
-  background:#333;
-}
-/* SOCIAL */
-.social{
-  text-align:center;
-  font-size:12px;
-  margin-top:8px;
-}
-.social a{
-  margin:0 6px;
-  color:white;
-  text-decoration:none;
+#paymentSection p {
+  margin-bottom: 10px;
+  font-size: 12px;
 }
 
-/* SECTIONS */
-.section{
-  display:none;
-  max-width:600px;
-  margin:20px auto;
-  text-align:center;
-  font-size:14px;
-  line-height:1.6;
+.payment-note {
+  font-size: 10px;
+  color: #666;
+  margin-bottom: 12px;
 }
 
-.section.active{
-  display:block;
+/* BUTTON STYLE */
+#intasendBtn {
+  background: #0b1f3a; /* dark navy */
+  color: #ffffff;
+  font-size: 12px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 20px; /* small rounded corners */
+  cursor: pointer;
+
+  box-shadow: 0 0 8px rgba(11, 31, 58, 0.6);
+  transition: all 0.25s ease-in-out;
 }
 
-/* TITLES */
-.section-title{
-  text-align:center;
-  font-size:16px;
-  color:#ccc;
-  margin-top:30px;
+/* hover glow effect */
+#pesapalBtn:hover {
+  box-shadow: 0 0 14px rgba(0, 140, 255, 0.8);
+  transform: translateY(-1px);
 }
 
-/* GRID */
-.row{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-  margin:20px;
-  margin-bottom:40px;
-  clear:both;
+/* click effect */
+#pesapalBtn:active {
+  transform: scale(0.97);
+  box-shadow: 0 0 6px rgba(0, 140, 255, 0.5);
 }
-
-.section-title{
-  text-align:center;
-  font-size:16px;
-  color:#ccc;
-  margin:70px 0 25px;   /*  less space above & below */
-  padding-top:14px;     /* extra breathing room */
-  clear:both;
-}
-
-
-}
-
-.product{
-  background:#222;
-  padding:10px;
-  border-radius:8px;
-  text-align:center;
-  animation:slide 0.6s ease;
-}
-
-.product img{
-  display:block;          /* prevents inline overlap */
-  width:100%;
-  aspect-ratio:2 / 3;
-  max-height:180px;
-  object-fit:cover;
-  border-radius:6px;
-  margin-bottom:8px;      /* space between image and title */
-}
-
-.preview{
-  display:block;
-  margin-top:4px;
-  line-height:1.4;
-  color: #00aaff;  
- 
-}
-
-.description{
-  display:none;
-  font-size:12px;
-  margin-top:8px;
-}
-
-.buy-btn{
-  display:inline-block;
-  margin-top:8px;
-  padding:6px 12px;
-  border-radius:20px;
-  background:#0af;
-  color:black;
-  text-decoration:none;
-  font-size:12px;
-  box-shadow:0 0 10px #0af;
-}
-
-@keyframes slide{
-  from{transform:translateX(40px);opacity:0}
-  to{transform:translateX(0);opacity:1}
-}
-
 /* FOOTER */
 footer{
-  background:#111;
+  width:100%;
+  background:#001f3f;
+  border-top:2px solid #001f3f;
   text-align:center;
-  padding:15px;
-  font-size:12px;
+  padding:18px 18px 30px;
+}
+
+.footer-links{
+  color:#fff;
+  font-size:11px;
+  font-weight:bold;
+  line-height:1.8;
+}
+
+footer a{
+  color:#e0e0e0;
+  text-decoration:none;
+  font-size:11px;
+  font-weight:300;
+}
+
+footer a:hover{
+  color:#fff;
+  text-decoration:underline;
 }
 </style>
 </head>
@@ -190,142 +241,151 @@ footer{
 <body>
 
 <header>
-  <div class="header-top">
-    
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-
-    <div class="logo">
-      <img src="ks_publogo.png" alt="Karieson Publications">
-    </div>
-
-    <div class="dropdown" id="menu">
-      <a onclick="showSection('home')">Home</a>
-      <a onclick="showSection('about')">About Us</a>
-      <a onclick="showSection('contact')">Contact Us</a>
-    </div>
-
+  <div class="logo">
+    <img src="gdeh_logo.png" alt="GDEH Logo">
   </div>
+  <a href="index.html" class="home-link">Back to Home</a>
 </header>
 
-    <div class="dropdown" id="menu">
-      <a onclick="showSection('home')">Home</a>
-      <a onclick="showSection('about')">About Us</a>
-      <a onclick="showSection('contact')">Contact Us</a>
-    </div>
+<div class="page-content">
+
+<h2>Garissa Digital Empowerment Hub CBO Workshops Booking Form</h2>
+
+<div class="note">Applicant Must Give Consent Before Booking</div>
+
+<form id="bookingForm">
+
+<fieldset>
+<legend>Participant Information</legend>
+
+<label>First Name <span class="required">*</span></label>
+<input type="text" id="firstName" required>
+
+<label>Last Name <span class="required">*</span></label>
+<input type="text" id="lastName" required>
+
+<label>Email Address <span class="required">*</span></label>
+<input type="email" id="email" required>
+
+<label>Phone Number <span class="required">*</span></label>
+<input type="tel" id="phone" required>
+
+</fieldset>
+
+<fieldset>
+<legend>Workshop Booking</legend>
+
+<label>Select Course <span class="required">*</span></label>
+<select id="courseSelect" required>
+  <option value="">Choose Course</option>
+  <option value="Computer Packages">Computer Packages</option>
+  <option value="Agro Entrepreneurship">Agro Entrepreneurship</option>
+  <option value="Smartphone Literacy">Smartphone Literacy</option>
+  <option value="ICT Short Courses">ICT Short Courses</option>
+</select>
+
+<label>Select Unit <span class="required">*</span></label>
+<select id="unitSelect" required>
+  <option value="">Choose Unit</option>
+</select>
+
+<label>Preferred Weekend <span class="required">*</span></label>
+<input type="date" id="weekendDate" required>
+
+<label>Number of Seats</label>
+<input type="number" id="seats" min="1" max="30" value="1">
+
+</fieldset>
+
+<div class="consent-box">
+  <input type="checkbox" id="consentCheck" required>
+  <label for="consentCheck">
+    I accept the Privacy Policy and Terms & Conditions *
+  </label>
+</div>
+
+<!-- CAPTCHA -->
+<div id="captchaBox">
+  <img id="captchaImage" alt="CAPTCHA"
+       width="180"
+       height="60"
+       style="border:1px solid #ddd;border-radius:6px;background:#f9f9f9;display:block;margin:auto;">
+</div>
+  <br>
+
+  <label style="display:flex;align-items:center;gap:6px;justify-content:center;font-size:9px;color:#001f3f;">
+    Enter CAPTCHA
+
+    <svg onclick="openCaptcha()"
+         xmlns="http://www.w3.org/2000/svg"
+         width="14"
+         height="14"
+         viewBox="0 0 24 24"
+         fill="none"
+         stroke="#001f3f"
+         stroke-width="2"
+         stroke-linecap="round"
+         stroke-linejoin="round"
+         style="cursor:pointer;"
+         title="Refresh CAPTCHA">
+
+      <polyline points="23 4 23 10 17 10"></polyline>
+      <path d="M20.49 15A9 9 0 1 1 23 10"></path>
+
+    </svg>
+  </label>
+
+  <input type="text"
+         id="captchaInput"
+         placeholder="Enter CAPTCHA"
+         style="padding:6px;margin-top:6px;width:120px;border:1px solid #ddd;border-radius:6px;font-size:9px;">
+
+  <div style="margin-top:8px;">
+    <a href="#"
+       onclick="verifyCaptcha();return false;"
+       style="font-size:9px;color:#001f3f;font-weight:600;text-decoration:none;">
+       Verify CAPTCHA
+    </a>
   </div>
-
-  <div class="social">
-    Follow us:
-    <a href="#"></a>
-    <a href="#"></a>
-    <a href="#"></a>
-    <a href="#"></a>
-    <a href="#"></a>
-  </div>
-</header>
-
-<!-- HOME -->
-<div id="home" class="section active">
-  <p>
-    Welcome to <strong>Karieson Publications</strong> — where knowledge meets creativity.
-    We specialize in academic research publications, diploma projects, and short novels
-    designed to inspire, educate, and empower.
-  </p>
 </div>
 
-<!-- ABOUT -->
-<div id="about" class="section">
-  <p>
-    Karieson Publications is committed to supporting students, researchers, and writers
-    through high-quality academic materials and creative literary works.
-  </p>
+
+<div id="paymentSection">
+  <h3>Workshop Payment</h3>
+
+  <p><strong>Workshop Fee:</strong> KSh 1000</p>
+
+  <small class="payment-note">
+    Secure payment via IntaSend
+  </small>
+
+  <button id="intasendBtn" type="button">
+    Pay with IntaSend
+  </button>
 </div>
 
-<!-- CONTACT -->
-<div id="contact" class="section">
-  <p>
-     Email: info@kariesonpublications.com<br>
-     WhatsApp: +254 XXX XXX XXX<br>
-     Location: Kenya
-  </p>
-</div>
+<button type="submit" id="submitBtn" disabled>
+Complete Booking
+</button>
 
-<h3 class="section-title">Research Publications (Degree)</h3>
-<div class="row">
-  <!-- Row 1 -->
-  <div class="product"><img src="degree_research01.jpeg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Degree Research<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-  <div class="product"><img src="degree_research02.jpeg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Degree Research<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-  <div class="product"><img src="degree_research03.jpeg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Degree Research<br><a class="buy-btn" href="#">Buy Now</a></div></div>
+</form>
 
-  <!-- Row 2 -->
-  <div class="product"><img src="degree_research04.jpeg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Degree Research<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-  <div class="product"><img src="degree_research05.jpeg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Degree Research<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-  <div class="product"><img src="degree_research06.jpeg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Degree Research<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-
-  <!-- Row 3 -->
-  <div class="product"><img src="degree_research07.jpeg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Degree Research<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-  <div class="product"><img src="degree_research08.jpeg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Degree Research<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-  <div class="product"><img src="degree_research09.jpeg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Degree Research<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-</div>
-<h3 class="section-title">Research Publications (Diploma)</h3>
-<div class="row">
-  <div class="product"><img src="diploma1.jpg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Diploma Research<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-  <div class="product"><img src="diploma2.jpg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Diploma Research<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-  <div class="product"><img src="diploma3.jpg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Diploma Research<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-
-  <div class="product"><img src="diploma4.jpg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Diploma Research<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-  <div class="product"><img src="diploma5.jpg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Diploma Research<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-  <div class="product"><img src="diploma6.jpg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Diploma Research<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-
-  <div class="product"><img src="diploma7.jpg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Diploma Research<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-  <div class="product"><img src="diploma8.jpg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Diploma Research<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-  <div class="product"><img src="diploma9.jpg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Diploma Research<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-</div>
-
-<h3 class="section-title">Publications (Short Novels)</h3>
-<div class="row">
-  <div class="product"><img src="novel1.jpg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Short Novel<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-  <div class="product"><img src="novel2.jpg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Short Novel<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-  <div class="product"><img src="novel3.jpg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Short Novel<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-
-  <div class="product"><img src="novel4.jpg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Short Novel<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-  <div class="product"><img src="novel5.jpg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Short Novel<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-  <div class="product"><img src="novel6.jpg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Short Novel<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-
-  <div class="product"><img src="novel7.jpg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Short Novel<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-  <div class="product"><img src="novel8.jpg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Short Novel<br><a class="buy-btn" href="#">Buy Now</a></div></div>
-  <div class="product"><img src="novel9.jpg"><span class="preview" onclick="toggleDescription(this)">Preview</span><div class="description">Short Novel<br><a class="buy-btn" href="#">Buy Now</a></div></div>
 </div>
 
 <footer>
-© Karieson research and publications. All rights reserved
+  <div class="footer-links">
+    © 2026 Garissa Digital Empowerment Hub CBO | All Rights Reserved
+    <br>
+    <a href="privacy_terms.html">Privacy Policy</a> |
+    <a href="privacy_terms.html">Terms & Conditions</a>
+  </div>
 </footer>
 
+<script src="https://unpkg.com/intasend-inlinejs-sdk@4.0.8/build/intasend-inline.js"></script>
 
-<script>
-function toggleMenu(){
-  const menu = document.getElementById("menu");
-  menu.style.display = menu.style.display === "block" ? "none" : "block";
-}
+<script src="frontend.js"></script>
 
-function showSection(id){
-  document.querySelectorAll(".section").forEach(sec => {
-    sec.classList.remove("active");
-  });
-  document.getElementById(id).classList.add("active");
-  document.getElementById("menu").style.display = "none";
-}
-
-function toggleDescription(el){
-  const desc = el.nextElementSibling;
-  desc.style.display = desc.style.display === "block" ? "none" : "block";
-}
-</script>
+<script src="captcha.js"></script>
 
 </body>
-
 </html>
